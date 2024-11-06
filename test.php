@@ -1,41 +1,118 @@
 <?php
-//Действия с числами
+$arr = [1, 2, 3, 7, 31, 4, 1, 8, 6];
 
-echo 7 % 3; //Получить остаток от деления 7 на 3
+//посчитать длину массива
+count($arr);
 
-echo (int)(7/2);//Получить целую часть деления 7
+//переместить первые 4 элемента массива в конец массива
+for($i = 0;$i <= 3;$i++){
+	
+    $el = array_shift($arr);
+	
+    array_push($arr,$el);
+};
 
-echo (int)(7.15/2);//Получить целую часть деления 7,15\
+//получить сумму 4,5,6 элемента
+$sumArr = $arr[4]+$arr[5]+$arr[6];
 
-echo sqrt(25);//Получить корень из 25
+$firstArr = [
 
-//Действия со строки
+    'one' => 1,
+  
+    'two' => 2,
+  
+    'three' => 3,
+  
+    'foure' => 5,
+  
+    'five' => 12,
+  
+  ];
+  
+  $secondArr = [
+  
+    'one' => 1,
+  
+    'seven' => 22,
+  
+    'three' => 32,
+  
+    'foure' => 5,
+  
+    'five' => 13,
+  
+    'six' => 37,
+  
+  ];
 
-$string = 'Десять негритят пошли купаться в море';
+//найти все элементы которые отсутствуют в первом массиве и присутствуют во втором
+array_diff($secondArr,$firstArr);
 
-echo explode(" ", $string)[3]; //Получить 4-е слово из фразы
+//найти все элементы которые присутствую в первом и отсутствуют во втором
+array_diff($firstArr,$secondArr);
 
-echo mb_substr($string,16,1); //Получить 17-й символ из фразы
+//найти все элементы значения которых совпадают 
+array_intersect($firstArr,$secondArr);
 
-echo mb_convert_case($string, MB_CASE_TITLE, "UTF-8"); //Сделать большой каждую первую букву слов фразы
+//найти все элементы значения которых отличается
 
-echo mb_strlen($string, "UTF-8"); //Считать длину строки
+$diffFirst = array_diff_assoc($firstArr, $secondArr);
+$diffSecond = array_diff_assoc($secondArr, $firstArr);
 
-//Действия с логическими данными
+$differences = array_merge($diffFirst, $diffSecond);
 
-echo true == 1; //Верно ли утверждение true равно 1 Да
 
-echo false === 0; //Верно ли утверждение false тождественно 0 Нет
+$firstArray = [
+  'one' => 1,
+  'two' => [
+      'one' => 1,
+      'seven' => 22,
+      'three' => 32,
+  ],
+  'three' => [
+      'one' => 1,
+      'two' => 2,
+  ],
+  'foure' => 5,
+  'five' => [
+      'three' => 32,
+      'foure' => 5,
+      'five' => 12,
+  ],
+];
 
-//Какая срока больше three – три
-echo strlen("три"); // В этом случаи три
-echo mb_strlen("three", "UTF-8"); // В этом варианте three но тут нужно передавать кодировку
+//получить все вторые элементы вложенных массивов
 
-//Какое число больше 125 умножить на 13 плюс 7 или 223 плюс 28 умножить 2
+$result = [];
 
-$number1 = 125 * 13 + 7;
-$number2 = 223 + 28 * 2;
+foreach ($firstArray as $key => $value) {
+  if (is_array($value)) {
+      $innerValues = array_values($value);
+      if (isset($innerValues[1])) {
+          $result[$key] = $innerValues[1];
+      }
+  }
+};
 
-echo $number1 >= $number2 ? $number1 : $number2;
+//получить общее количество элементов в массиве
 
-?>
+$totalCount = count($firstArray, COUNT_RECURSIVE);
+
+
+//получить сумму всех значений в массиве
+
+function flattenArray($array) {
+  $flatArray = [];
+  foreach ($array as $value) {
+      if (is_array($value)) {
+          $flatArray = array_merge($flatArray, flattenArray($value));
+      } else {
+          $flatArray[] = $value;
+      }
+  }
+  return $flatArray;
+}
+
+
+$flattenedArray = flattenArray($firstArray);
+$totalSum = array_sum($flattenedArray);
