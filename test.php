@@ -118,5 +118,87 @@ $flattenedArray = flattenArray($firstArray);
 $totalSum = array_sum($flattenedArray);
 
 
+/*Создать функцию принимающую массив произвольной вложенности и определяющий
+  любой элемент номер которого передан параметром во всех вложенных массивах.*/
 
+  function FindElementByIndex($arr, $idx){
+    //Проверяем если переданые данные не являються массивом возвращаем null
+    if (!is_array($arr)) {
+      return null;
+    }
+
+    //Если index в текущем массиве есть, возвращаем его данные
+    if (array_key_exists($idx, $arr)) {
+      return $arr[$idx];
+    }
+    //Если index в текущем массиве нет, возвращаем Comming Soon
+    else{
+      return 'Comming Soon';
+    }
+
+    //Рекурсивно проходимся по каждому элементу
+    foreach($arr as $el){
+      if(is_array($arr)){
+        $result = FindElementByIndex($el, $idx);
+
+        if($result !== null){
+          return $result;
+        }
+      }
+    }
+  }
+
+/*
+Создать функцию которая считает все буквы b в переданной строке,
+в случае если передается не строка функция должна возвращать false
+*/
+
+function CountLetterB($input){
+  //Проверяем, является ли входное значение строкой
+  if(!is_string($input)){
+    return false;
+  }
+
+  //Приводим строку к нижнему регистру и считаем количество символов 'b'
+  return substr_count(strtolower($input), 'b');
+}
+
+/*
+Создать функцию которая считает сумму значений всех
+элементов массива произвольной глубины
+*/
+
+function CountArrSum($arr){
+  $sum = 0;
+
+  foreach($arr as $val){
+    if(is_array($val)){
+      //Рекурсия если элемент вложенный массив
+      $sum = CountArrSum($val);
+    }else{
+      //добавить значение если эллемент число
+      $sum += $val;
+    }
+  }
+  return $sum;
+}
+
+/*
+ Создать функцию которая определит сколько квадратов меньшего размера
+можно вписать в квадрат большего размера размер возвращать в float
+*/
+function CountSmallerSquares(float $bigSquareSize, float $smallSquareSize): float {
+  // Проверка на корректные значения
+  if ($smallSquareSize <= 0 || $bigSquareSize <= 0 || $smallSquareSize > $bigSquareSize) {
+      return 0;
+  }
+
+  // Количество маленьких квадратов по одной стороне большого квадрата
+  $countPerSide = $bigSquareSize / $smallSquareSize;
+
+  // Общее количество маленьких квадратов, которое поместится в большом квадрате
+  $totalSquares = $countPerSide * $countPerSide;
+
+  return $totalSquares;
+}
 
