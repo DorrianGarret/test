@@ -183,7 +183,10 @@ function CountArrSum($arr){
   return $sum;
 }
 
-
+/*
+Создать функцию которая определит сколько квадратов меньшего размера
+можно вписать в квадрат большего размера размер возвращать в float
+*/
 function CountSmallerSquares(float $bigSquareSize, float $smallSquareSize): float {
   // Проверка на корректные значения
   if ($smallSquareSize <= 0 || $bigSquareSize <= 0 || $smallSquareSize > $bigSquareSize) {
